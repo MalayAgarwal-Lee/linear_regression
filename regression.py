@@ -38,6 +38,14 @@ def cost_function(X, y, theta, m):
     return 1 / (2 * m) * sum(sqr_err)
 
 
+def plot_cost(costs):
+    plt.plot(costs)
+    plt.xlabel("Number of iterations")
+    plt.ylabel("J(theta)")
+    plt.title("Iterations vs Cost")
+    plt.show()
+
+
 def gradient_descent(X, y, theta, alpha, num_iters, m):
 
     # Array to store cost values at each iteration
@@ -54,11 +62,3 @@ def gradient_descent(X, y, theta, alpha, num_iters, m):
 
     plot_cost(j_vals)
     return theta
-
-
-def plot_cost(costs):
-    plt.plot(costs)
-    plt.xlabel("Number of iterations")
-    plt.ylabel("J(theta)")
-    plt.title("Iterations vs Cost")
-    plt.show()
