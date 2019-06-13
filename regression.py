@@ -14,7 +14,7 @@ def load_data(path):
     Assumes that all columns of the CSV file except the last one has features
     And the last column has y-values
     If there are x columns leaving the last column in the data, an extra
-    feature is added to have x+1 features (feature x_0)
+    feature is added to have x+1 features (x_0 = 1 for all training egs)
     So that the intercept term can be treated as another parameter
 
     Also, creates a matrix, theta, with initial value of parameters
