@@ -3,6 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def normalize(X):
+    mu = np.mean(X, axis=0)
+    sigma = np.std(X, axis=0)
+    return (X - mu) / sigma
+
+
 def load_data(path):
     '''
     Given a CSV file as path, extracts:
@@ -34,6 +40,10 @@ def load_data(path):
 
     # Getting values of features
     X = np.array(data.iloc[:, 0:-1])
+
+    # Normalizing the features if there are more than one features
+    if X.shape[1] > 1:
+        X = normalize(X)
 
     # Appending (m, 1) matrix of ones for extra feature x_0
     # Each row of matrix corresponds to a training example
