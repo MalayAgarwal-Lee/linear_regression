@@ -54,7 +54,6 @@ def load_data(path):
 def cost_function(X, y, theta, m):
     '''
     '''
-
     # Predicting y with current theta values
     predictions = X @ theta
 
