@@ -4,6 +4,31 @@ import matplotlib.pyplot as plt
 
 
 def load_data(path):
+    '''
+    Given a CSV file as path, extracts:
+        * The design matrix
+        * The y-values
+        * The number of training examples
+        * The number of features
+
+    Assumes that all columns of the CSV file except the last one has features
+    And the last column has y-values
+    If there are x columns leaving the last column in the data, an extra
+    feature is added to have x+1 features (feature x_0)
+    So that the intercept term can be treated as another parameter
+
+    Also, creates a matrix, theta, with initial value of parameters
+
+    Arguments:
+        path: str, the path of the CSV file
+
+    Returns: (X, y, theta, m, n): tuple, consisting:
+        m: int, number of training examples
+        n: int, number of features (= x + 1, including x_0)
+        X: ndarray, (m, n) matrix consisting of the features
+        y: ndarray, (m, 1) matrix consisting of y-values
+        theta: ndarray, (n, 1) zero matrix for initial parameters
+    '''
     data = pd.read_csv(path, header=None)
     m = data.shape[0]
 
@@ -27,6 +52,8 @@ def load_data(path):
 
 
 def cost_function(X, y, theta, m):
+    '''
+    '''
 
     # Predicting y with current theta values
     predictions = X @ theta
@@ -39,6 +66,8 @@ def cost_function(X, y, theta, m):
 
 
 def plot_cost(costs):
+    '''
+    '''
     plt.plot(costs)
     plt.xlabel("Number of iterations")
     plt.ylabel("J(theta)")
@@ -47,6 +76,8 @@ def plot_cost(costs):
 
 
 def gradient_descent(X, y, theta, alpha, num_iters, m):
+    '''
+    '''
 
     # Array to store cost values at each iteration
     j_vals = np.zeros((num_iters, 1))
