@@ -4,8 +4,25 @@ import matplotlib.pyplot as plt
 
 
 def normalize(X):
+    '''
+    Given a design matrix, X, normalizes each feature's values
+    To be in the range -0.5 <= x <= 0.5 (aprrox)
+    The formula used for normalization is:
+        X = (X - mean) / (Standard deviation)
+
+    This prevents overflow warnings from NumPy
+
+    Arguments:
+        X: ndarray, (m, n) matrix consisting of the features
+
+    Returns:
+        X: ndarray, (m, n) normalized matrix with the features
+    '''
+
+    # Since each feature is stored column-wise, axis=0
     mu = np.mean(X, axis=0)
     sigma = np.std(X, axis=0)
+
     return (X - mu) / sigma
 
 
@@ -41,7 +58,7 @@ def load_data(path):
     # Getting values of features
     X = np.array(data.iloc[:, 0:-1])
 
-    # Normalizing the features if there are more than one features
+    # Normalizing the features if there are more than one feature
     if X.shape[1] > 1:
         X = normalize(X)
 
