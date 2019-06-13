@@ -103,6 +103,11 @@ def cost_function(X, y, theta, m):
 
 def plot_cost(costs):
     '''
+    Plots the values of the cost function
+    Against number of iterations
+    If gradient descent has converged, graph flattens out
+    And becomes constant near the final iterations
+    Otherwise, it shows a different trend
     '''
     plt.plot(costs)
     plt.xlabel("Number of iterations")
@@ -113,19 +118,38 @@ def plot_cost(costs):
 
 def gradient_descent(X, y, theta, alpha, num_iters, m):
     '''
+    Runs gradient descent num_iters times
+    To get the optimum values of the parameters
+    The algorithm can be looked at here:
+    https://en.wikipedia.org/wiki/Gradient_descent
+
+    It can be vectorized as follows:
+        theta = theta - (alpha / m) * ((X * theta - y)' * X)'
+
+    Arguments:
+        X: ndarray, (m, n) matrix consisting of the features
+        y: ndarray, (m, 1) matrix with y-values
+        theta: ndarray, (n, 1) matrix with initial parameter values
+        alpha: float, the learning rate
+        num_iters: int, the number of times algorithm is to be run
+        m: int, the number of training examples
+
+    Returns:
+        theta: ndarray, (n, 1) matrix with optimum param values
     '''
 
     # Array to store cost values at each iteration
+    # Will be used to check convergence of the algorithm
     j_vals = np.zeros((num_iters, 1))
 
     for i in range(num_iters):
-        # Vectorized gradient descent
-        # delta = ((X * theta - y)' * X)'
-        # => theta = theta - (alpha / m) * delta
-        diff_transpose = np.transpose((X @ theta - y))
-        delta = np.transpose(diff_transpose @ X)
+        # (X * theta - y)'
+        difference = np.transpose((X @ theta - y))
+        # ((X * theta - y) * X)'
+        delta = np.transpose(difference @ X)
         theta = theta - (alpha / m) * delta
         j_vals[i][0] = cost_function(X, y, theta, m)
 
+    # Plotting the cost values
     plot_cost(j_vals)
     return theta
