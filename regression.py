@@ -80,14 +80,24 @@ def load_data(path):
 
 def cost_function(X, y, theta, m):
     '''
+    Calculates the value of the cost function
+    For a given X, y, theta and m
+
+    The formula for the cost function is as follows:
+
+        cost, J = (1/2 * m) * sum((X * theta - y) ^ 2)
+
+    Arguments:
+        X: ndarray, (m, n) matrix consisting of the features
+        y: ndarray, (m, 1) matrix with y-values
+        theta: ndarray, (n, 1) matrix with parameter values
+        m: int, number of training examples
+
+    Returns:
+        J: ndarray, (1,1) matrix with value of cost function
     '''
-    # Predicting y with current theta values
     predictions = X @ theta
-
-    # Getting (h(x) - y) ^ 2
     sqr_err = np.square(predictions - y)
-
-    # Computing cost as (1/2 * m) * sum((h(x) - y) ^ 2)
     return 1 / (2 * m) * sum(sqr_err)
 
 
