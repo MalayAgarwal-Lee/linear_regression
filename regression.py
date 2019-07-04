@@ -70,7 +70,7 @@ def gradient_descent(X, y, theta, alpha, num_iters, m):
     for i in range(num_iters):
         # (X * theta - y)'
         difference = np.transpose((X @ theta - y))
-        # ((X * theta - y) * X)'
+        # ((X * theta - y)' * X)'
         delta = np.transpose(difference @ X)
         theta = theta - (alpha / m) * delta
         j_vals[i][0] = cost_function(X, y, theta, m)
