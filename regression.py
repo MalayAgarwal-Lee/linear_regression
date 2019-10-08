@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def cost_function(X, y, theta, m):
+def cost_function(X, y, theta, m, *, reg_param=0):
     '''
     Calculates the value of the cost function
     For a given X, y, theta and m
@@ -22,7 +22,8 @@ def cost_function(X, y, theta, m):
     '''
     predictions = X @ theta
     sqr_err = np.square(predictions - y)
-    return 1 / (2 * m) * sum(sqr_err)
+    theta_sqr = np.square(theta[1:])
+    return 1 / (2 * m) * (sum(sqr_err) + reg_param * np.sum(theta_sqr))
 
 
 def plot_cost(costs):
@@ -40,7 +41,7 @@ def plot_cost(costs):
     plt.show()
 
 
-def gradient_descent(X, y, theta, alpha, num_iters, m):
+def gradient_descent(X, y, theta, alpha, num_iters, m, *, reg_param=0):
     '''
     Runs gradient descent num_iters times
     To get the optimum values of the parameters
@@ -71,7 +72,11 @@ def gradient_descent(X, y, theta, alpha, num_iters, m):
         difference = np.transpose((X @ theta - y))
         # ((X * theta - y)' * X)'
         delta = np.transpose(difference @ X)
-        theta = theta - (alpha / m) * delta
+
+        temp = theta
+        temp[0] = 0
+        theta = theta - (alpha / m) * (delta + reg_param * temp)
+
         j_vals[i][0] = cost_function(X, y, theta, m)
 
     # Plotting the cost values
