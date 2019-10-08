@@ -9,13 +9,14 @@ def cost_function(X, y, theta, m, *, reg_param=0):
 
     The formula for the cost function is as follows:
 
-        cost, J = (1/2 * m) * sum((X * theta - y) ^ 2)
+        cost, J = (1/2 * m) * (sum((X * theta - y) ^ 2) + sum(theta[1:] ^ 2))
 
     Arguments:
         X: ndarray, (m, n) matrix consisting of the features
         y: ndarray, (m, 1) matrix with y-values
         theta: ndarray, (n, 1) matrix with parameter values
         m: int, number of training examples
+        reg_param: int, keyword-only argument, the regularization parameter
 
     Returns:
         J: ndarray, (1,1) matrix with value of cost function
@@ -49,7 +50,7 @@ def gradient_descent(X, y, theta, alpha, num_iters, m, *, reg_param=0):
     https://en.wikipedia.org/wiki/Gradient_descent
 
     It can be vectorized as follows:
-        theta = theta - (alpha / m) * ((X * theta - y)' * X)'
+        theta = theta - (alpha / m) * (((X * theta - y)' * X)' + reg_param * theta[1:])
 
     Arguments:
         X: ndarray, (m, n) matrix consisting of the features
@@ -58,6 +59,7 @@ def gradient_descent(X, y, theta, alpha, num_iters, m, *, reg_param=0):
         alpha: float, the learning rate
         num_iters: int, the number of times algorithm is to be run
         m: int, the number of training examples
+        reg_param: int, keyword-only argument, the regularization parameter
 
     Returns:
         theta: ndarray, (n, 1) matrix with optimum param values
@@ -73,6 +75,8 @@ def gradient_descent(X, y, theta, alpha, num_iters, m, *, reg_param=0):
         # ((X * theta - y)' * X)'
         delta = np.transpose(difference @ X)
 
+        # Regularization is not done for the first theta value
+        # A temporary variable is used where the first theta value is 0
         temp = theta
         temp[0] = 0
         theta = theta - (alpha / m) * (delta + reg_param * temp)
